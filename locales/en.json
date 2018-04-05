@@ -2,5 +2,22 @@
 	"empty_file": "the file {{file}} is empty",
 	"not_found": "Not Found",
 	"not_valid": "Not valid",
-	"generic": "There was an error: {{err}}"
+	"generic": "There was an error: {{err}}",
+	"Adds": "Adds",
+	"Nodepop application": "Nodepop application",
+	"Amazing adds": "Amazing adds",
+	"All our ads": "All our ads",
+	"Name": "Name",
+	"Sale": "Sale",
+	"Price": "Price",
+	"Picture": "Picture",
+	"Tags": "Tags",
+	"Please login": "Please login",
+	"TEXT": "TEXT",
+	"HELLO": "HELLO",
+	"NAME_AND_AGE": "NAME_AND_AGE",
+	"MOUSE": {
+		"one": "MOUSE",
+		"other": "MOUSE"
+	}
 }

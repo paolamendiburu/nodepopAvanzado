@@ -2,5 +2,22 @@
 	"empty_file": "el fichero {{file}} está vacio",
 	"not_found": "No encontrado",
 	"not_valid": "No válido",
-	"generic": "Hubo un error: {{err}}"
+	"generic": "Hubo un error: {{err}}",
+	"Adds": "Anuncios",
+	"Nodepop application": "Aplicación Nodepop",
+	"Amazing adds": "Anuncios increíbles",
+	"All our ads": "Todos los anuncios",
+	"Name": "Nombre",
+	"Sale": "Venta",
+	"Price": "Precio",
+	"Picture": "Foto",
+	"Tags": "Etiquetas",
+	"Please login": "Please login",
+	"TEXT": "TEXT",
+	"HELLO": "HELLO",
+	"NAME_AND_AGE": "NAME_AND_AGE",
+	"MOUSE": {
+		"one": "MOUSE",
+		"other": "MOUSE"
+	}
 }

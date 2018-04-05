@@ -8,20 +8,22 @@ const db = require('./lib/connectMongoose');
 
 // Cargamos las definiciones de todos nuestros modelos
 const Anuncio = require('./models/Anuncio');
+const Usuario = require('./models/Usuario');
 
 db.once('open', async function () {
   try {
     const answer = await askUser('Are you sure you want to empty DB? (no) ');
     if (answer.toLowerCase() === 'yes') {
-      
+
       // Inicializar nuestros modelos
       await initAnuncios();
-      
+      await initUsuarios();
+
     } else {
       console.log('DB install aborted!');
     }
     return process.exit(0);
-  } catch(err) {
+  } catch (err) {
     console.log('Error!', err);
     return process.exit(1);
   }
@@ -38,7 +40,19 @@ function askUser(question) {
     });
   });
 }
+async function initUsuarios() {
+  const deleted = await Usuario.deleteMany();
 
+  console.log(`Eliminados ${deleted.n} usuarios.`);
+  const inserted = await Usuario.insertMany([
+    {
+      name: 'User',
+      email: 'user@example.com',
+      password: await Usuario.hashPassword('1234')
+    }
+  ]);
+  console.log(`Insertados ${inserted.length} usuarios.`);
+}
 async function initAnuncios() {
 
   await Anuncio.remove({});
