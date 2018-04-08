@@ -19,5 +19,9 @@
 	"MOUSE": {
 		"one": "MOUSE",
 		"other": "MOUSE"
-	}
+	},
+	"Create an add": "Create an add",
+	"Create new add": "Create new add",
+	"Photo": "Photo",
+	"Create add": "Create add"
 }

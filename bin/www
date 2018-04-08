@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
+// carga de variables de entorno desde .env
+require('dotenv').config();
+
 /**
  * Module dependencies.
  */
 
 var app = require('../app');
-var debug = require('debug')('nodepop:server');
+var debug = require('debug')('nodeapi:server');
 var http = require('http');
 
 /**
@@ -86,6 +89,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind + ' (env: ' + app.get('env') + ')');
+  debug('Listening on ' + bind);
 }
-

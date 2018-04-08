@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -52,6 +53,7 @@ const loginController = require('./routes/loginController');
  */
 app.use('/apiv1/anuncios', jwtAuth(), require('./routes/apiv1/anuncios'));
 app.post('/apiv1/authenticate', loginController.postLoginJWT);
+
 // middleware de control de sesiones
 app.use(session({
   name: 'nodepop-session',

@@ -19,5 +19,9 @@
 	"MOUSE": {
 		"one": "MOUSE",
 		"other": "MOUSE"
-	}
+	},
+	"Create an add": "Create an add",
+	"Create new add": "Crear nuevo anuncio",
+	"Photo": "Foto",
+	"Create add": "Create add"
 }

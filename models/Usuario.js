@@ -5,13 +5,13 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
 // configuramos transport de nodemailer
-const transport = nodemailer.createTransport({
+/*const transport = nodemailer.createTransport({
   service: 'SendGrid',
   auth: {
     user: process.env.SENDGRID_USER,
     pass: process.env.SENDGRID_PASSWORD
   }
-});
+});*/
 
 const usuarioSchema = mongoose.Schema({
   name: String,

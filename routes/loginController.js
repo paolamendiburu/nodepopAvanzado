@@ -58,13 +58,17 @@ class LoginController {
     }, (err, token) => {
       if (err) {
         next(err);
+        console.log("error es", err);
         return;
       }
+      //console.log("JWT_SECRET ES", process.env.JWT_SECRET);
       res.json({ success: true, token: token });
     });
+    //console.log("JWT_SECRET ES", process.env.JWT_SECRET);
 
 
   }
+
 
   // GET /logout
   logout(req, res, next) {
