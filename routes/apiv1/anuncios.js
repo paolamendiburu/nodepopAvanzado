@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 const upload = require('../../lib/uploadConfig');
 const cote = require('cote');
+const requester = new cote.Requester({ name: 'creacion de thumbnails responder' });
 const path = require('path');
 
 router.get('/', (req, res, next) => {
@@ -56,80 +57,73 @@ router.get('/tags', function (req, res) {
 
 // POST /
 // Añadir un anuncio
-router.post('/', upload.single('foto'), (req, res, next) => {
-  console.log(req.body);
+router.post('/', upload.single('foto'), async (req, res, next) => {
+  try {
+    const data = req.body;
+    data.foto = req.file.filename;
+    data.tags = req.body.tags.split(",");
 
-  const data = req.body;
-  console.log('upload:', req.file);
-  data.foto = req.file.filename;
-  data.tags = req.body.tags.split(",");
-  if (data.venta == "venta") {
-    data.venta = true;
+
+    // creamos documento de anuncio en memoria
+    const anuncio = new Anuncio(data);
+
+    // lo persistimos en la base de datos
+    await anuncio.save((err, anuncioGuardado) => { // .save es método de instancia
+      if (err) {
+        next(err);
+        return;
+      }
+      res.json({ success: true, result: anuncioGuardado });
+    });
+
+    requester.send({
+      type: 'resize',
+      name: data.foto
+    }, res => {
+      console.log('thumbnail es', res);
+    });
+
+
   }
-  else {
-    data.venta = false;
+  catch (err) {
+    next(err);
+    return;
   }
 
-  // creamos documento de anuncio en memoria
-  const anuncio = new Anuncio(data);
 
-  // lo persistimos en la base de datos
-  anuncio.save((err, anuncioGuardado) => { // .save es método de instancia
-    if (err) {
-      next(err);
-      return;
-    }
-    res.json({ success: true, result: anuncioGuardado });
-  });
-  const requester = new cote.Requester({ name: 'creacion de thumbnails responder' });
+});
+// DELETE /
+// Elimina un anuncio
+router.delete('/:id', async (req, res, next) => {
+  try {
 
+    const _id = req.params.id;
+    await Anuncio.remove({ _id: _id }).exec(); // .remove es método estático
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+    return;
+  }
+});
 
+// PUT /
+// Actualiza un anuncio
+router.put('/:id', async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const data = req.body;
 
-  requester.send({
-    type: 'resize',
-    name: anuncio.foto
-  }, res => {
-    console.log('thumbnail es', res);
-  });;
+    const anuncioActualizado = await Anuncio.findByIdAndUpdate(_id, data, {
+      new: true // esto es para obtener la nueva versión del documento
+      // tras actualizarlo
+    });
 
+    res.json({ success: true, result: anuncioActualizado });
 
-  // DELETE /
-  // Elimina un anuncio
-  router.delete('/:id', async (req, res, next) => {
-    try {
-      const _id = req.params.id;
-      await Anuncio.remove({ _id: _id }).exec(); // .remove es método estático
-      res.json({ success: true });
-    } catch (err) {
-      next(err);
-      return;
-    }
-  });
-
-  // PUT /
-  // Actualiza un anuncio
-  router.put('/:id', async (req, res, next) => {
-    try {
-      const _id = req.params.id;
-      const data = req.body;
-
-      const anuncioActualizado = await Anuncio.findByIdAndUpdate(_id, data, {
-        new: true // esto es para obtener la nueva versión del documento
-        // tras actualizarlo
-      });
-
-      res.json({ success: true, result: anuncioActualizado });
-
-    } catch (err) {
-      next(err);
-      return;
-    }
-  });
-
-
-
-
-
+  } catch (err) {
+    next(err);
+    return;
+  }
 });
 
 module.exports = router;
